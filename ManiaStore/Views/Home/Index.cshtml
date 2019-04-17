@@ -1,8 +1,288 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-}
+﻿@model IEnumerable<ManiaStore.Models.Product>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@{
+    ViewData["Title"] = "MaleItems";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="row" style="padding-top: 1rem;">
+    <div class="col-lg-2" style="padding-left: 4rem">
+        <div class="row" style="padding-bottom: 1rem"> 
+            <h5><b>FILTERS</b></h5>
+        </div>
+        <div class="row">
+            <div class="dropdown-nav col-12" style="border-bottom:1px solid #e1e1e1">
+                Gender
+            </div>
+            <ul class="dropdown">
+                <li class="col-12">
+                    <div class="dropdown-item">
+                        <input id="genderMale" name="filters[gender][]" type="checkbox" value="1" />
+                        <label for="genderMale">Gentlemen</label>
+                    </div>
+                </li>
+                <li class="col-12">
+                    <div class="dropdown-item">
+                        <input id="genderFemale" name="filters[gender][]" type="checkbox" value="2" />
+                        <label for="genderFemale">Ladies</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="row" >
+            <div class="dropdown-nav col-12" style="border-bottom:1px solid #e1e1e1">
+                Categories
+            </div>
+            <ul class="dropdown " >
+                <li class="col-12">
+                    <a class="dropdown-item" href="#">
+                        <input name="filters[category][]" type="checkbox" value="c_1" />
+                        <label>Clothes</label>
+                    </a>
+                </li>
+                <li class="col-12">
+                    <a class="dropdown-item" href="#">
+                        <input name="filters[category][]" type="checkbox" value="c_2" />
+                        <label>Shoes</label>
+                    </a>
+                </li>
+                <li class="col-12">
+                    <a class="dropdown-item" href="#">
+                        <input name="filters[category][]" type="checkbox" value="c_3" />
+                        <label>Accessories</label>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-lg-10">
+        <div class="container">
+            <div class="row" style="padding-bottom: 1rem">
+                <nav class="col-md-12" style="padding-bottom: 1rem" role="navigation">
+                    <ul>
+                        <li class=" offset-3 col-lg-1">
+                            <div class="dropdown-nav">
+                                Brands
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[category][]" type="checkbox" value="1" />
+                                        <label>Luxury brands</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[category][]" type="checkbox" value="2" />
+                                        <label>Middle brands</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[category][]" type="checkbox" value="3" />
+                                        <label>Economy brands</label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=" col-lg-1">
+                            <div class="dropdown-nav">
+                                Sizes
+                            </div>
+                            <ul class="dropdown-menu size-dropdown-menu">
+                                <li>
+                                    <div class="dropdown-header">
+                                        Clothes Sizes
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-7" type="checkbox" name="" value="7">
+                                            <label for="size-7">XXS</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-8" type="checkbox" name="" value="8">
+                                            <label for="size-8">XS</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-9" type="checkbox" name="" value="9">
+                                            <label for="size-9">S</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-10" type="checkbox" name="" value="10">
+                                            <label for="size-10">M</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-1" type="checkbox" name="" value="1">
+                                            <label for="size-1">L</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-2" type="checkbox" name="" value="2">
+                                            <label for="size-2">XL</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-6" type="checkbox" name="" value="6">
+                                            <label for="size-6">XXL</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-11" type="checkbox" name="" value="11">
+                                            <label for="size-11">3XL</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-12" type="checkbox" name="" value="12">
+                                            <label for="size-12">4XL</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-25" type="checkbox" name="" value="25">
+                                            <label for="size-25">5XL</label>
+                                        </div>
+                                        <div class="size-checkbox float-left">
+                                            <input id="size-26" type="checkbox" name="" value="26">
+                                            <label for="size-26">6XL</label>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="col-lg-1" style="margin-right: 1rem">
+                            <div class="dropdown-nav" style="margin-right:1rem">
+                                Discount
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[discount][]" type="checkbox" value="1" />
+                                        <label>0% to 30%</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[discount][]" type="checkbox" value="2" />
+                                        <label>30% to 60%</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input name="filters[discount][]" type="checkbox" value="3" />
+                                        <label>over 60%</label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @*
+                            <li class=" col-lg-1">
+                                <div class="dropdown-nav">
+                                    Color
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Sub-1</a></li>
+                                    <li><a class="dropdown-item" href="#">Sub-2</a></li>
+                                    <li><a class="dropdown-item" href="#">Sub-3</a></li>
+                                </ul>
+                            </li>
+                            <li class=" col-lg-1">
+                                <div class="dropdown-nav">
+                                    Added
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#">Sub-1</a></li>
+                                    <li><a class="dropdown-item" href="#">Sub-2</a></li>
+                                    <li><a class="dropdown-item" href="#">Sub-3</a></li>
+                                </ul>
+                            </li>
+                            <li class=" col-lg-1">
+                                <div class="dropdown-nav">
+                                    Price
+                                </div>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-item"><input type="range" min="5" max="100" /></li>
+                                </ul>
+                            </li>*@
+                        <li class=" col-lg-1">
+                            <div class="dropdown-nav">
+                                Season
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox" />
+                                        <label>Summer</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox" />
+                                        <label>Spring/Fall</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox" />
+                                        <label>Winter</label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=" col-lg-1">
+                            <div class="dropdown-nav">
+                                Condition
+                            </div>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input id="conditionNew" type="checkbox" />
+                                        <label for="conditionNew">New</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox" />
+                                        <label>Great</label>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        <input type="checkbox" />
+                                        <label>Good</label>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="items" style="overflow: hidden">
+               <partial name="Items" model=Model />
+            </div>
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 </div>
+
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $('input').click(function () {
+            var completeData = "";
+            if ($(this).hasClass("checked")) {
+                $(this).removeClass("checked");
+            } else {
+                $(this).addClass("checked");
+            }
+            $('input:checkbox.checked').each(function () {
+                var value = $(this).attr('name') + "=" + $(this).val();
+                if (completeData == "") {
+                    completeData = value
+                } else {
+                    completeData = completeData + ">" + $(this).attr('name') + "=" + $(this).val();
+                }
+            });
+            $('#items').load('Home/Items', "CompleteData=" + completeData);
+        });
+    });
+</script>

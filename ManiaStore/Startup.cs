@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BrandVille.Areas.Identity.Data;
+using BrandVille.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -10,7 +12,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ManiaStore.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -35,19 +36,33 @@ namespace ManiaStore
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDbContext<BrandVilleContext>(options =>
+                options.UseSqlServer(GetRDSConnectionString()));
+            services.AddDefaultIdentity<BrandVilleUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<BrandVilleContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
+        public static string GetRDSConnectionString()
+        {
+            string dbname = "-";
+
+            if (string.IsNullOrEmpty(dbname)) return null;
+
+            string username = "BrandVilleMaster";
+            string password = "BrandVille2019!";
+            string hostname = "brandvilledb.cnyrfpwafzvq.eu-central-1.rds.amazonaws.com";
+            string port = "1433";
+
+            return "Data Source=" + hostname + ";Initial Catalog=" + dbname + ";User ID=" + username + ";Password=" + password + ";";
+        }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseBrowserLink();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
