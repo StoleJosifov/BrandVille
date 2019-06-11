@@ -1,38 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BrandVille.Areas.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
-using ManiaStore.Models;
-using ManiaStore.Services;
+using BrandVille.Models;
+using BrandVille.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace ManiaStore.Controllers
+namespace BrandVille.Controllers
 {
     public class HomeController : Controller
     {
-        public Items ItemsService = new Items();
+        public ItemService ItemsService = new ItemService();
         private readonly UserManager<BrandVilleUser> _userManager;
+        private readonly BrandVilleContext _dbContext;
 
-        public HomeController(UserManager<BrandVilleUser> userManager)
+        public HomeController(UserManager<BrandVilleUser> userManager, BrandVilleContext dbContext)
         {
             _userManager = userManager;
+            _dbContext = dbContext;
         }
 
         public async Task<IActionResult> Index()
         {
-            var user =await _userManager.GetUserAsync(this.User);
-            var items = await ItemsService.GetItems(1);
+            var items = await ItemsService.GetItems();
             return View(items);
         }
 
-        public async Task<IActionResult> Items(string CompleteData)
+        public async Task<IActionResult> Items(string completeData, string pageNumber = "1")
         {
-            var items = await ItemsService.GetItems(2, CompleteData);
+            var items = await ItemsService.GetItems(completeData,pageNumber);
             return PartialView(items);
+        }
+
+        public IActionResult GetCartItems()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = _dbContext.Users.Include(x => x.BasketItems).Single(x => x.Id == userId);
+            return PartialView(user.BasketItems);
+        }
+        public IActionResult ViewCart()
+        {
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = _dbContext.Users.Include(x => x.BasketItems).Single(x => x.Id == userId);
+            return View(user.BasketItems);
+        }
+
+        public async Task<IActionResult> CheckOut()
+        {
+            var redirectUrl =await ItemsService.CheckOut();
+            return Redirect(redirectUrl);
         }
 
         public IActionResult Privacy()
@@ -40,26 +62,55 @@ namespace ManiaStore.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Add(string productId)
+        public async Task<IActionResult> Add(BasketItems product)
         {
-            await AddToBasket(productId);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            if(userId==null) return Redirect("/Identity/Account/Register");
 
+            await ItemsService.AddToBasket(product.ProductId);
+            var user = _dbContext.Users.Include(x=>x.BasketItems).Single(x => x.Id == userId);
+            if (user.BasketItems == null)
+            {
+                user.BasketItems = new List<BasketItems>()
+                {
+                    product
+                };
+            }
+            else
+            {
+                user.BasketItems.Add(product);
+            }
+
+            var result =await _userManager.UpdateAsync(user);
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> Remove(string productId)
+        {
+            await ItemsService.RemoveFromBasket(productId);
+            var userId = _userManager.GetUserId(HttpContext.User);
+            var user = _dbContext.Users.Include(x => x.BasketItems).Single(x => x.Id == userId);
+            if(user.BasketItems == null)
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                var product = user.BasketItems.FirstOrDefault(x=>x.ProductId==productId);
+                user.BasketItems.Remove(product);
+                var res = _dbContext.BasketItems.Remove(product);
+                var resd = await _dbContext.SaveChangesAsync();
+            }
+            
+            var result = await _userManager.UpdateAsync(user);
+            
             return RedirectToAction("Index");
         }
 
-        private static async Task AddToBasket(string productId)
+        public async Task<IActionResult> ViewItem(string url)
         {
-            using (var httpClient = new HttpClient())
-            {
-                var formContent = new FormUrlEncodedContent(new[]
-                {
-                    new KeyValuePair<string, string>("productId", productId)
-                });
-                formContent.Headers.Add("Cookie",
-                    "MAN=tdqb7qtst207f1vlar2ldriaam; _fbp=fb.1.1553620306172.1890827268; _ga=GA1.2.4774605.1553620306; _gid=GA1.2.835322073.1553620306; _ym_uid=1553620306622688231; _ym_d=1553620306; _ym_isad=2; acceptedCookie=true; _ym_visorc_48635135=w");
+            var viewModel = await ItemsService.ProductModelView(url);
 
-                var response = await httpClient.PostAsync("https://maniastores.bg/shopping/sellout/add", formContent);
-            }
+            return View(viewModel);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

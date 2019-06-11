@@ -1,10 +1,7 @@
-﻿using System;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
-using System.Linq;
 using System.Threading.Tasks;
 using BrandVille.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
@@ -12,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 
-namespace ManiaStore.Areas.Identity.Pages.Account.Manage
+namespace BrandVille.Areas.Identity.Pages.Account.Manage
 {
     public class EnableAuthenticatorModel : PageModel
     {
@@ -149,7 +146,7 @@ namespace ManiaStore.Areas.Identity.Pages.Account.Manage
         {
             return string.Format(
                 AuthenticatorUriFormat,
-                _urlEncoder.Encode("ManiaStore"),
+                _urlEncoder.Encode("BrandVille"),
                 _urlEncoder.Encode(email),
                 unformattedKey);
         }

@@ -1,35 +1,25 @@
 @using BrandVille.Areas.Identity.Data
+@using BrandVille.Models
 @using Microsoft.AspNetCore.Identity
 @inject SignInManager<BrandVilleUser> SignInManager
 @inject UserManager<BrandVilleUser> UserManager
 
 <ul class="navbar-nav">
-    @if (SignInManager.IsSignedIn(User))
+    @if(SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" >
-                <i class="fas fa-shopping-cart"></i>
-            </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <label>Item 1</label>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <label>Item 2</label>
-                    </a>
-                </li>
-                <li>
-                    <a class="dropdown-item" href="#">
-                        <label>Item 3</label>
-                    </a>
-                </li>
-            </ul>
+            <div id="basket-items-list" class="dropdown">
+                <button id="cart-button" class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+                    <i class="fas fa-shopping-cart"></i>
+                </button>
+                <div id="dropdown-products" class="dropdown-menu cart-dropdown">
+                    <partial name="GetCartItems" model="new List<BasketItems>()"/>
+                </div>
+            </div>
+            
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
@@ -47,3 +37,11 @@
         </li>
     }
 </ul>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $('#basket-items-list').on("show.bs.dropdown", function () {
+            $('#dropdown-products').load('Home/GetCartItems');
+        });
+    });
+</script>
+

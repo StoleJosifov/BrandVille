@@ -1,6 +1,4 @@
-using System;
-
-namespace ManiaStore.Models
+namespace BrandVille.Models
 {
     public class ErrorViewModel
     {

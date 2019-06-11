@@ -1,4 +1,6 @@
 ﻿@using BrandVille.Areas.Identity.Data
+@using BrandVille.Areas.Identity.Pages.Account.Manage
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<BrandVilleUser> SignInManager
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();

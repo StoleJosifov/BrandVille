@@ -1,0 +1,135 @@
+﻿@model IEnumerable<BrandVille.Models.BasketItems>
+
+@{
+    ViewData["Title"] = "ViewCart";
+}
+<div class="row">
+    <h1 class="offset-1 col-10">Checkout</h1>
+    <table class="table table-bordered border border-info col-6">
+        <thead>
+            <tr>
+                <th class="col-3">
+                    Image
+                </th>
+                <th class="col-3">
+                    @Html.DisplayNameFor(model => model.Brand)
+                </th>
+                <th class="col-2">
+                    @Html.DisplayNameFor(model => model.Size)
+                </th>
+                <th class="col-2">
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th class="col-1">
+                    Remove from cart
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr class="justify-content-center">
+                    <td>
+                        <img style="max-width: 55px" src="@item.ImageUrl" alt="" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Brand)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Size)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.ActionLink("X", "Remove", item, new { @class = "col-sm-1" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="box-content border border-info clearfix col-6" style="padding: 1rem;">
+        <div data-action="https://maniastores.bg/address/add" id="add-new-address" class="clearfix hide-placeholder" data-type="">
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="contact-person-first-name" class="hide-label">Name</label>
+                <input id="contact-person-first-name" name="firstName" type="text" placeholder="Name" value="" data-type="add-new-address-firstName" data-active="">
+                <div class="error-message" data-type="add-new-address-firstName"></div>
+            </div>
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="contact-person-last-name" class="hide-label">Last Name</label>
+                <input id="contact-person-last-name" name="lastName" type="text" placeholder="Last name" value="" data-type="add-new-address-lastName" data-active="">
+                <div class="error-message" data-type="add-new-address-lastName"></div>
+            </div>
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="contact-phone" class="hide-label">Phone Number</label>
+                <input id="contact-phone" name="phone" type="text" placeholder="Phone Number" value="" data-type="add-new-address-phone">
+                <div class="error-message" data-type="add-new-address-phone">&gt;</div>
+            </div>
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="place" class="hide-label">City</label>
+                <input id="place" name="city" type="text" autocomplete="off" placeholder="City" value="" data-id="" data-type="add-new-address-city">
+                <div class="autocomplete-container place-autocomplete"></div>
+                <div class="error-message" data-type="add-new-address-city"></div>
+            </div>
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="municipality" class="hide-label">Municipality </label>
+                <input id="municipality" name="municipality" type="text" placeholder="Municipality" value="" readonly="">
+                <div class="error-message"></div>
+            </div>
+            <div class="input-wrapper col-sm-4 float-right">
+                <label for="district" class="hide-label">District</label>
+                <input id="district" name="district" type="text" autocomplete="off" placeholder="District" value="" data-id="" data-itemtype="" data-type="add-new-address-district">
+                <div class="autocomplete-container district-autocomplete"></div>
+                <div class="error-message" data-type="add-new-address-district"></div>
+            </div>
+            <div class="input-wrapper col-sm-3 float-left">
+                <label for="street" class="hide-label">Street</label>
+                <input id="street" name="street" type="text" autocomplete="off" placeholder="Street" value="" data-id="" data-itemtype="" data-type="add-new-address-street">
+                <div class="autocomplete-container street-autocomplete"></div>
+                <div class="error-message" data-type="add-new-address-street"></div>
+            </div>
+            <div class="input-wrapper col-sm-2 float-left street-number">
+                <label for="streetNumber" class="hide-label">№</label>
+                <input id="streetNumber" name="streetNumber" type="text" placeholder="№" value="" data-type="add-new-address-streetNumber">
+                <div class="error-message" data-type="add-new-address-streetNumber"></div>
+            </div>
+            <div class="input-wrapper col-sm-3 float-left">
+                <label for="building" class="hide-label">Building</label>
+                <input id="building" name="building" type="text" placeholder="Building" value="" data-type="add-new-address-building">
+                <div class="error-message" data-type="add-new-address-building"></div>
+            </div>
+            <div class="input-wrapper col-sm-3 float-left">
+                <label for="entrance" class="hide-label">Entrance</label>
+                <input id="entrance" name="entrance" type="text" placeholder="Entrance" value="">
+                <div class="error-message"></div>
+            </div>
+            <div class="input-wrapper col-sm-3 float-left">
+                <label for="floor" class="hide-label">Floor</label>
+                <input id="floor" name="floor" type="text" placeholder="Floor" value="">
+                <div class="error-message"></div>
+            </div>
+            <div class="input-wrapper col-sm-3 float-left">
+                <label for="apartment" class="hide-label">Apartment</label>
+                <input id="apartment" name="apartment" type="text" placeholder="Apartment" value="">
+                <div class="error-message"></div>
+            </div>
+            <div class="input-wrapper details col-sm-12 float-left">
+                <label for="details" class="hide-label">Other details</label>
+                <input id="details" name="details" type="text" placeholder="Other details" value="">
+                <div class="error-message"></div>
+            </div>
+        </div>
+        <a class="btn btn-info offset-1 col-3" asp-action="CheckOut">Checkout</a>
+    </div>
+    
+</div>
+
+
+
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        //$('checkout-btn').click(function () {
+        //    $('checkout-message').innerHTML("You must have valid phone number and address");
+        //});
+    });
+</script>

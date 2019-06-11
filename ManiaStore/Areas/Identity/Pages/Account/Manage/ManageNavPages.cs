@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace ManiaStore.Areas.Identity.Pages.Account.Manage
+namespace BrandVille.Areas.Identity.Pages.Account.Manage
 {
     public static class ManageNavPages
     {

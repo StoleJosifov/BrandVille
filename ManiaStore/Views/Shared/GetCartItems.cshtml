@@ -1,0 +1,32 @@
+﻿@model List<BrandVille.Models.BasketItems>
+
+
+@if(Model != null && Model.Count > 0)
+{
+    foreach(var item in Model)
+    {
+        <div class="row border-bottom box-shadow" style="margin: 0">
+            <div class="col-sm-3">
+                <img style="max-width: 35px" src="@item.ImageUrl" />
+            </div>
+            <div class="col-sm-3">
+                @Html.DisplayFor(modelItem => item.Brand)
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.Size)
+            </div>
+            <div class="col-sm-2">
+                @Html.DisplayFor(modelItem => item.Price)
+            </div>
+            @Html.ActionLink("X", "Remove", "Home", item, new { @class = "col-sm-1" })
+
+        </div>
+    }
+    <a class="btn btn-info" asp-controller="Home" asp-action="ViewCart">Go to checkout</a>
+}
+else
+{
+    <div class="row border-bottom box-shadow" style="margin: 0">
+        Cart is Empty
+    </div>
+}

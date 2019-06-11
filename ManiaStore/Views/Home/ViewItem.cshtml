@@ -1,0 +1,120 @@
+﻿@model BrandVille.Models.ProductModelView
+@{
+    ViewData["Title"] = "ViewItem";
+}
+<a href="javascript:history.go(-1)">
+    <h4 style="padding-left: 1rem">
+        <i class="fas fa-chevron-left">  </i>
+    </h4>
+</a>
+<div> </div>
+<div class="product-details-wrapper">
+    <div class="product-details-container row clearfix status-1" data-status="@Model.Status" data-id="@Model.ProductId" data-producturl="@Model.Url">
+        <div class="product-images float-left clearfix">
+            <div class="all-images float-left">
+                <img class="small-image text-center" src="@Model.FrontPictureSrc" alt="@Model.Name" title="@Model.Name">
+                <img class="small-image text-center" src="@Model.BackPictureSrc" alt="@Model.Name" title="@Model.Name">
+            </div>
+            <div class="image-container float-left">
+                <div class="icon-bubble left-bubble " data-id="132324">
+                    <i class="far fa-heart"></i>
+                </div>
+                @if(Model.Discount != "")
+                {
+                    <div class="discount-wrapper">
+                        <div class="sellout-discount"> @Model.Discount </div>
+                    </div>
+
+                }
+                <img class="zoom-box" src="@Model.FrontPictureSrc" alt="@Model.Name" >
+            </div>
+        </div>
+        <div class="product-info float-left">
+            <div class="product-info-basic info-box">
+                <p class="product-brand text-uppercase">@Model.Brand </p>
+                <p class="product-type">@Model.Type</p>
+                <p class="product-size"> Size: <strong>@Model.Size</strong> </p>
+                <p> Condition: @Model.Condition </p>
+            </div>
+            <div class="price-section product-sellout">
+                <div class="info-box not-active">
+                    <div class="price-block sellout">
+                        <div class="price-wrapper clearfix">
+                            <div class="label-price"> <b>Price:</b> <span class="text-uppercase"></span> </div>
+                            @if(Model.Discount!="")
+                            {
+                            <div class="price old">@Model.StartingPriceInLek</div>
+                            <div class="label-price text-lowercase"> @Model.Discount <span class="text-uppercase"></span> </div>
+                            }
+                            <div class="price">@Model.CurrentPriceInLek</div>
+                        </div>
+                        <div class="product-buttons sellout-buttons float-right clearfix">
+                            <div class="price-button add-button text-uppercase tooltip prevent-popup-close top-center" data-id="132324"> Добавям 
+                                <img src="dist/assets/icon_bag_button.svg" alt="" class="bag-icon"> </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="product-info-details info-box">
+                <p><span class="description-label"><b>Gender:</b> </span>@Model.Gender</p>
+                <p><span class="description-label"><b>Description:</b> </span> @Model.Description </p>
+                <p><span class="description-label"><b>Color:</b> </span> @Model.Color</p>
+                <p><span class="description-label"><b>Season:</b> </span>@Model.Season</p>
+                <p><span class="description-label"><b>Material:</b> </span>@Model.Material</p>
+            </div>
+
+            <div class="info-box">
+                <div class="info-dropdown clearfix" data-type="discount">
+                    <span><b>Base Discount</b></span>
+                    <i class="fas fa-chevron-down float-right"></i>
+                </div>
+                <div class="dropdown-text" data-type="discount">
+                    All products displayed online will be discounted every day at 17:00 at a certain percentage <span class="description-label">@Model.DiscountLimit</span>
+
+                    @*Çmimi i këtij produkti do të bjerë çdo ditë nga 18:00 për 12 ditë derisa të arrijë një zbritje prej <span class="description-label">@Model.DiscountLimit</span>*@
+
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-dropdown clearfix" data-type="delivery">
+                    <span><b>Delivery</b></span>
+                    <i class="fas fa-chevron-down float-right"></i>
+                </div>
+                <div class="dropdown-text" data-type="delivery">
+                    We collaborate with ADEX and Albanian Courier for all the shipments inside Albania. Every item will arrive at your address in 5 or less working days.
+
+                    @* Ne bashkepunojmë me ADEX dhe Albanian Courier për dërgesat brenda Shqipërise. Cdo porosi do të vijë në shtëpine tuaj për 5 ose më pak ditë *@
+                </div>
+            </div>
+            <div class="info-box">
+                <div class="info-dropdown clearfix" data-type="return">
+                    <span><b>Returns</b></span>
+                    <i class="fas fa-chevron-down float-right"></i>
+                </div>
+                <div class="dropdown-text" data-type="return">
+                    <p>Every product bought from us can be returned in a 14 day time frame. You have the right to return the product bought from us for a full refund in this time frame. The refund will be issued after the product is inspected that it was not worn, damaged, washed, and that it still has the Brandville tag. Products that are used, washed, damaged, missing the Brandville tag are not entitled to a refund.</p>
+
+                    @*<p>A mund të ktheni një produkt që keni blerë në Brandville?
+                        Po, cdo produkt që ju blini në Brandville mund ta ktheni brenda 14 Ditëve.
+                        Cila do të jetë arsyeja, ju do mundeni ta ktheni produktin e blerë tek ne, në rast se nuk e keni përdorur, dëmtuar, larë dhe nuk i keni hequr etiketën tonë.
+                        Pasi të kemi marrë produktin dhe të kemi kontrolluar që është ne te njejtat parametra qe jua kemi nisur atherë ju mund të terhiqni vlerën e produktit të kthyer në një nga pikat tona fizike.
+                        Produktet të cilat pas kontrollit rezultojnë që nuk kanë etiketën origjinale të Brandville, që jane përdorur, dëmtuar, larë nuk do të jenë subjekt i kthimit.</p>*@
+                </div>
+            </div>
+            <div style="min-height: 30px"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $('.info-dropdown').click(function () {
+            var type = $(this).data('type');
+            $('.info-dropdown .dropdown-arrow[data-type="' + type + '"]').toggleClass('active');
+            $('.dropdown-text[data-type="' + type + '"]').toggleClass('active');
+        });
+        $('.small-image').click(function () {
+            var url = $(this).attr('src');
+            $('.zoom-box').attr('src', url);
+        });
+    });
+</script>

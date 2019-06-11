@@ -1,49 +1,67 @@
-﻿@model IEnumerable<ManiaStore.Models.Product>
+﻿@model IEnumerable<BrandVille.Models.Product>
 @{
     ViewData["Title"] = "Items";
 }
-<div class="row" style="overflow-y: scroll;  height:100vh">
-    <div class="col-12 text-center" style="min-height: 200px"><img src="https://lizemariarthur.files.wordpress.com/2013/08/image-4.jpg" alt="" /></div>
-    @foreach (var product in Model)
+<div class="row justify-content-center" style="overflow-y: scroll;  height:80vh">
+    <div class="col-sm-10 text-center" style="min-height: 200px">
+        <img src="https://lizemariarthur.files.wordpress.com/2013/08/image-4.jpg" style="width:70%" alt=""/>
+    </div>
+    @foreach(var product in Model)
     {
-        <div class="col-lg-3 item-for-sale">
-            <a class="row" style="padding-bottom: 10px" data-toggle="modal" data-target="#exampleModal">
-                <div class="imageBox col-sm-12">
-                    <div class="row" >
-                        <img class="item-picture col-sm-12" src=@product.Pictures.Front.Src alt="Default Image">
-                        <img class="hoverImg item-picture col-sm-12" src=@product.Pictures.Back.Src alt="Profile Image">
+        <div class="col-sm-3 item-for-sale">
+            <a class="row justify-content-center link-to-product" style="padding-bottom: 10px" asp-action="ViewItem"
+               asp-route-url="@product.Url.Substring(product.Url.LastIndexOf('/') + 1)">
+                <div class="col-sm-10">
+                    <div class="imageCard">
+                        <img class="img-top item-picture" src=@product.Pictures.Back.Src alt="Default Image">
+                        <img class="item-picture" src=@product.Pictures.Front.Src alt="Profile Image">
                     </div>
                 </div>
             </a>
             <div class="row">
-                <div class="col-sm-10" style="text-overflow:ellipsis;white-space:nowrap"><b>@product.Brand</b></div>
+                <div class="col-sm-10" style="text-overflow: ellipsis; white-space: nowrap"><b>@product.Brand</b></div>
                 <div class="col-sm-2">@product.Size</div>
                 @if(!product.StartingPrice.IsLastPrice)
                 {
                     <div class="col-sm-6">Starting Price</div>
-                    <div class="col-sm-6 text-right" style="text-decoration:line-through">@product.StartingPrice.FullInLekRounded</div>
+                    <div class="col-sm-6 text-right" style="text-decoration: line-through">@product.StartingPrice.FullInLekRounded</div>
                     <div class="col-sm-6">New Price:</div>
                     <div class="col-sm-6 text-right"><b>@product.CurrentPrice.FullInLekRounded</b></div>
                 }
                 else
                 {
-                    <div class="col-sm-6"><br/></div>
-                    <div class="col-sm-6 text-right"><br/></div>
+                    <div class="col-sm-6"><br /></div>
+                    <div class="col-sm-6 text-right"><br /></div>
                     <div class="col-sm-6">Price:</div>
                     <div class="col-sm-6 text-right"><b>@product.CurrentPrice.FullInLekRounded</b></div>
                 }
 
                 @if(product.Status == "1")
                 {
-                    <div class="col-md-12" style="padding-top: 10px">
-                        <a class="btn btn-success col-md-12" asp-action="Add" asp-route-productId=@product.ProductId method="post">Buy Now</a>
-                    </div>
+                    if(product.ReservedUserId == -1)
+                    {
+                        <div class="col-sm-12" style="padding-top: 10px">
+                            @Html.ActionLink("BuyNow", "Add", product.CartProduct, new { @class = "btn btn-success col-sm-12" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-12" style="padding-top: 10px"><button class="btn btn-secondary col-sm-12">Reserved for 30 min.</button> </div>
+                    }
                 }
                 else if(product.Status == "2")
                 {
-                    <div class="col-md-12" style="padding-top:10px"><button class="btn btn-secondary col-md-12">SOLD</button> </div>
+                    <div class="col-sm-12" style="padding-top: 10px"><button class="btn btn-secondary col-sm-12">SOLD</button> </div>
+                }
+                else if(product.Status == "4")
+                {
+                    <div class="col-sm-12" style="padding-top: 10px"><button class="btn btn-secondary col-sm-12">Reserved for 30 min.</button> </div>
                 }
             </div>
         </div>
     }
 </div>
+
+
+
+

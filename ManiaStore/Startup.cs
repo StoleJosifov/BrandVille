@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BrandVille.Areas.Identity.Data;
-using BrandVille.Models;
+﻿using BrandVille.Areas.Identity.Data;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ManiaStore
+namespace BrandVille
 {
     public class Startup
     {
@@ -37,23 +31,22 @@ namespace ManiaStore
             });
 
             services.AddDbContext<BrandVilleContext>(options =>
-                options.UseSqlServer(GetRDSConnectionString()));
+                options.UseSqlServer(GetRdsConnectionString()));
             services.AddDefaultIdentity<BrandVilleUser>()
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<BrandVilleContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
-        public static string GetRDSConnectionString()
+        public static string GetRdsConnectionString()
         {
-            string dbname = "-";
+            const string dbname = "-";
 
             if (string.IsNullOrEmpty(dbname)) return null;
 
-            string username = "BrandVilleMaster";
-            string password = "BrandVille2019!";
-            string hostname = "brandvilledb.cnyrfpwafzvq.eu-central-1.rds.amazonaws.com";
-            string port = "1433";
+            const string username = "BrandVilleMaster";
+            const string password = "BrandVille2019!";
+            const string hostname = "villedb.cnyrfpwafzvq.eu-central-1.rds.amazonaws.com";
 
             return "Data Source=" + hostname + ";Initial Catalog=" + dbname + ";User ID=" + username + ";Password=" + password + ";";
         }

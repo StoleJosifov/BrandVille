@@ -1,12 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using Newtonsoft.Json;
 
-namespace ManiaStore.Models
+namespace BrandVille.Models
 {
     public class RootObject
     {
@@ -16,8 +14,27 @@ namespace ManiaStore.Models
     {
         public List<Product> Products { get; set; }
     }
+
+    public class BasketItems
+    {
+        [Key]
+        public string ProductId { get; set; }
+        public string Brand { get; set; }
+        public string Size { get; set; }
+        public string ImageUrl { get; set; }
+        public string Price { get; set; }
+
+    }
     public class Product
     {
+        public BasketItems CartProduct => new BasketItems()
+        {
+            ProductId = this.ProductId,
+            Brand = this.Brand,
+            Size = this.Size,
+            ImageUrl = this.Pictures.Front.Src,
+            Price = this.CurrentPrice.FullInLekRounded
+        };
         public string ProductId { get; set; }
         public string Brand { get; set; }
         public string Type { get; set; }
