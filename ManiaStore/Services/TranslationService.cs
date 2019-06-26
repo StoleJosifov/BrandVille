@@ -13,7 +13,6 @@ namespace BrandVille.Services
     {
         public static string Translate(string text)
         {
-
             string url = $"http://translate.google.com/translate_a/t?client=j&text={HttpUtility.UrlEncode(text)}&hl=en&sl=bg&tl=en";
 
             // Retrieve Translation with HTTP GET call
@@ -36,7 +35,7 @@ namespace BrandVille.Services
             }
 
             // Extract out trans":"...[Extracted]...","from the JSON string
-            string result = Regex.Match(html, "trans\":(\".*?\"),\"", RegexOptions.IgnoreCase).Groups[1].Value;
+            string result = html.Replace("\"","");
 
             if (string.IsNullOrEmpty(result))
             {

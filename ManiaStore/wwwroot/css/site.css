@@ -264,7 +264,7 @@ img {
     overflow-y: hidden;
 }
 .product-details-container {
-    height: 100vh;
+    height: 90vh;
     overflow-y: scroll;
 }
 
@@ -1654,7 +1654,6 @@ img {
 }
 .info-box {
     padding:20px 5px 20px 10px;
-    height: 50px;
     border-bottom:1px solid #e1e1e1
 }
 @media only screen and (max-width:1140px) {
@@ -2068,7 +2067,6 @@ img {
     text-decoration:underline
 }
 .dropdown-text.active {
-    min-height: 250px;
     max-height:500px;
     transition:max-height .8s
 }

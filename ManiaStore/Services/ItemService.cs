@@ -114,6 +114,17 @@ namespace BrandVille.Services
                 viewModel.CurrentPriceInLek = viewModel.RoundInLek(viewModel.CurrentPrice.Split(" ")[0]);
                 var k = viewModel.StartingPrice.Split(" ")[0];
                 viewModel.StartingPriceInLek = viewModel.RoundInLek(viewModel.StartingPrice.Split(" ")[0]);
+
+                var translationStrings = viewModel.Gender + " ? " + viewModel.Description + " ? " + viewModel.Color + " ? " + viewModel.Season + " ? " + viewModel.Material;
+
+                translationStrings = TranslationService.Translate(translationStrings);
+
+                var values = translationStrings.Split("?");
+                viewModel.Gender = values[0];
+                viewModel.Description = values[1];
+                viewModel.Color = values[2];
+                viewModel.Season = values[3];
+                viewModel.Material = values[4];
             }
 
             return viewModel;
