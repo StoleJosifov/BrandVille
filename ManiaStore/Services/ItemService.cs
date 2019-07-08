@@ -11,13 +11,15 @@ namespace BrandVille.Services
     {
         private const string Cookie =
             "MAN=6dnh4nn2itbsvhrpn51eoonoeh; _ga=GA1.2.532640793.1559035257; _gid=GA1.2.328681249.1559035257; _ym_uid=1559035257651588532; _ym_d=1559035257; _fbp=fb.1.1559035257358.130701804; _ym_isad=2; modal_shown=yes; _ym_visorc_48635135=w; _gat_UA-50066373-1=1";
-        public async Task<List<Product>> GetItems(string data = null, string pageNumber = "1" )
+
+        public async Task<Result> GetItems(string data = null, string pageNumber = "1" )
         {
             using (var httpClient = new HttpClient())
             {
                 var keyValuePairs = new List<KeyValuePair<string, string>>
                 {
-                    new KeyValuePair<string, string>("sorts[page]", pageNumber.ToString())
+                    new KeyValuePair<string, string>("sorts[page]", pageNumber.ToString()),
+                    new KeyValuePair<string, string>("sorts[orderBy]", "1")
                 };
                 if (data != null)
                 {
@@ -31,16 +33,16 @@ namespace BrandVille.Services
 
                 var formContent = new FormUrlEncodedContent(keyValuePairs);
 
-                var response = await httpClient.PostAsync("https://maniastores.bg/razprodajba-drehi-vtora-ruka-online/products", formContent);
+                var response = await httpClient.PostAsync("https://mania.bg/razprodajba-drehi-vtora-ruka-online/products", formContent);
                 var content = await response.Content.ReadAsStringAsync();
                 try
                 {
                     var result = JsonConvert.DeserializeObject<RootObject>(content);
-                    return result.Result.Products;
+                    return result.Result;
                 }
                 catch
                 {
-                    return new List<Product>();
+                    return new Result();
                 }
             }
         }
@@ -89,7 +91,8 @@ namespace BrandVille.Services
                 var imageUrlsMatches = Regex.Matches(dataString, "data-image=\"(.*?)\"");
                 viewModel.FrontPictureSrc = imageUrlsMatches[0].Groups[1].ToString() ?? "";
                 viewModel.BackPictureSrc = imageUrlsMatches[1].Groups[1].ToString() ?? "";
-                viewModel.Brand = Regex.Match(dataString, "product-type\">(.*?)</p>").Groups[1].ToString() ?? "";
+                viewModel.Type = Regex.Match(dataString, "product-type\">(.*?)</p>").Groups[1].ToString() ?? "";
+                viewModel.Brand = Regex.Match(dataString, "product-brand text-uppercase\">(.*?)</p>").Groups[1].ToString() ?? "";
                 viewModel.Status = Regex.Match(dataString, "product-details-container clearfix (.*?)\"").Groups[1].ToString() ??
                                    "";
                 viewModel.Size = Regex.Match(dataString, "Размер: <strong>(.*?)</strong>").Groups[1].ToString() ?? "";
@@ -103,8 +106,8 @@ namespace BrandVille.Services
                 var condition = Regex.Match(dataString, "Състояние: <img src=\"(.*?)\"").Groups[1].ToString();
                 viewModel.Condition = condition != null
                     ? condition.Contains("five")
-                        ? "Great"
-                        : "Good"
+                        ? "Mrekullueshme"
+                        : "Mirë"
                     : "";
                 viewModel.DiscountLimit =
                     Regex.Match(dataString, "остъпка от <span class=\"description-label\">(.*?)</span> Повече информация")
@@ -115,7 +118,7 @@ namespace BrandVille.Services
                 var k = viewModel.StartingPrice.Split(" ")[0];
                 viewModel.StartingPriceInLek = viewModel.RoundInLek(viewModel.StartingPrice.Split(" ")[0]);
 
-                var translationStrings = viewModel.Gender + " ? " + viewModel.Description + " ? " + viewModel.Color + " ? " + viewModel.Season + " ? " + viewModel.Material;
+                var translationStrings = viewModel.Gender + " ? " + viewModel.Description + " ? " + viewModel.Color + " ? " + viewModel.Season + " ? " + viewModel.Material + " ? " + viewModel.Type;
 
                 translationStrings = TranslationService.Translate(translationStrings);
 
@@ -125,6 +128,7 @@ namespace BrandVille.Services
                 viewModel.Color = values[2];
                 viewModel.Season = values[3];
                 viewModel.Material = values[4];
+                viewModel.Type = values[5];
             }
 
             return viewModel;

@@ -33,14 +33,14 @@
             <div class="product-info-basic info-box">
                 <p class="product-brand text-uppercase">@Model.Brand </p>
                 <p class="product-type">@Model.Type</p>
-                <p class="product-size"> Size: <strong>@Model.Size</strong> </p>
-                <p> Condition: @Model.Condition </p>
+                <p class="product-size"> Masa: <strong>@Model.Size</strong> </p>
+                <p> Gjëndja: @Model.Condition </p>
             </div>
             <div class="price-section product-sellout">
                 <div class="info-box not-active">
                     <div class="price-block sellout">
                         <div class="price-wrapper clearfix">
-                            <div class="label-price"> <b>Price:</b> <span class="text-uppercase"></span> </div>
+                            <div class="label-price"> <b>Çmimi:</b> <span class="text-uppercase"></span> </div>
                             @if(Model.Discount!="")
                             {
                             <div class="price old">@Model.StartingPriceInLek</div>
@@ -56,49 +56,51 @@
                 </div>
             </div>
             <div class="product-info-details info-box">
-                <p><span class="description-label"><b>Gender:</b> </span>@Model.Gender</p>
-                <p><span class="description-label"><b>Description:</b> </span> @Model.Description </p>
-                <p><span class="description-label"><b>Color:</b> </span> @Model.Color</p>
-                <p><span class="description-label"><b>Season:</b> </span>@Model.Season</p>
-                <p><span class="description-label"><b>Material:</b> </span>@Model.Material</p>
+                <p><span class="description-label"><b>Gjini:</b> </span>@Model.Gender</p>
+                <p><span class="description-label"><b>Përshkrimi:</b> </span> @Model.Description </p>
+                <p><span class="description-label"><b>Ngjyra:</b> </span> @Model.Color</p>
+                <p><span class="description-label"><b>Sezoni:</b> </span>@Model.Season</p>
+                <p><span class="description-label"><b>Materiali:</b> </span>@Model.Material</p>
             </div>
 
             <div class="info-box">
                 <div class="info-dropdown clearfix" data-type="discount">
-                    <span><b>Base Discount</b></span>
+                    @*<span><b>Base Discount</b></span>*@
+                    <span><b>Zbritje bazë</b></span>
                     <i class="fas fa-chevron-down float-right"></i>
                 </div>
                 <div class="dropdown-text" data-type="discount">
-                    All products displayed online will be discounted every day at 17:00 at a certain percentage <span class="description-label">@Model.DiscountLimit</span>
+                    @*All products displayed online will be discounted every day at 17:00 at a certain percentage <span class="description-label">@Model.DiscountLimit</span>*@
 
-                    @*Çmimi i këtij produkti do të bjerë çdo ditë nga 18:00 për 12 ditë derisa të arrijë një zbritje prej <span class="description-label">@Model.DiscountLimit</span>*@
+                    Çmimi i këtij produkti do të bjerë çdo ditë nga 18:00 për 12 ditë derisa të arrijë një zbritje prej <span class="description-label">@Model.DiscountLimit</span>
 
                 </div>
             </div>
             <div class="info-box">
                 <div class="info-dropdown clearfix" data-type="delivery">
-                    <span><b>Delivery</b></span>
+                    @*<span><b>Delivery</b></span>*@
+                    <span><b>Dorëzim</b></span>
                     <i class="fas fa-chevron-down float-right"></i>
                 </div>
                 <div class="dropdown-text" data-type="delivery">
-                    We collaborate with ADEX and Albanian Courier for all the shipments inside Albania. Every item will arrive at your address in 5 or less working days.
+                    @*We collaborate with ADEX and Albanian Courier for all the shipments inside Albania. Every item will arrive at your address in 5 or less working days.*@
 
-                    @* Ne bashkepunojmë me ADEX dhe Albanian Courier për dërgesat brenda Shqipërise. Cdo porosi do të vijë në shtëpine tuaj për 5 ose më pak ditë *@
+                     Ne bashkepunojmë me ADEX dhe Albanian Courier për dërgesat brenda Shqipërise. Cdo porosi do të vijë në shtëpine tuaj për 5 ose më pak ditë 
                 </div>
             </div>
             <div class="info-box">
                 <div class="info-dropdown clearfix" data-type="return">
-                    <span><b>Returns</b></span>
+                    <span><b>Kthim</b></span>
                     <i class="fas fa-chevron-down float-right"></i>
                 </div>
                 <div class="dropdown-text" data-type="return">
-                    <p>Every product bought from us can be returned in a 14 day time frame. You have the right to return the product bought from us for a full refund in this time frame. The refund will be issued after the product is inspected that it was not worn, damaged, washed, and that it still has the Brandville tag. Products that are used, washed, damaged, missing the Brandville tag are not entitled to a refund.</p>
+                    @*<p>Every product bought from us can be returned in a 14 day time frame. You have the right to return the product bought from us for a full refund in this time frame. The refund will be issued after the product is inspected that it was not worn, damaged, washed, and that it still has the Brandville tag. Products that are used, washed, damaged, missing the Brandville tag are not entitled to a refund.</p>*@
 
-                    @*<p>A mund të ktheni një produkt që keni blerë në Brandville?
+                    <p>A mund të ktheni një produkt që keni blerë në Brandville?
                         Po, cdo produkt që ju blini në Brandville mund ta ktheni brenda 14 Ditëve.
                         Cila do të jetë arsyeja, ju do mundeni ta ktheni produktin e blerë tek ne, në rast se nuk e keni përdorur, dëmtuar, larë dhe nuk i keni hequr etiketën tonë.
                         Pasi të kemi marrë produktin dhe të kemi kontrolluar që është ne te njejtat parametra qe jua kemi nisur atherë ju mund të terhiqni vlerën e produktit të kthyer në një nga pikat tona fizike.
-                        Produktet të cilat pas kontrollit rezultojnë që nuk kanë etiketën origjinale të Brandville, që jane përdorur, dëmtuar, larë nuk do të jenë subjekt i kthimit.</p>*@
+                        Produktet të cilat pas kontrollit rezultojnë që nuk kanë etiketën origjinale të Brandville, që jane përdorur, dëmtuar, larë nuk do të jenë subjekt i kthimit.</p>
                 </div>
             </div>
             <div  style="height: 100px; padding-top: 30px"></div>

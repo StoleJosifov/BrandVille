@@ -28,14 +28,14 @@ namespace BrandVille.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var items = await ItemsService.GetItems();
-            return View(items);
+            var result = await ItemsService.GetItems();
+            return View(result);
         }
 
         public async Task<IActionResult> Items(string completeData, string pageNumber = "1")
         {
-            var items = await ItemsService.GetItems(completeData,pageNumber);
-            return PartialView(items);
+            var result = await ItemsService.GetItems(completeData,pageNumber);
+            return PartialView(result);
         }
 
         public IActionResult GetCartItems()

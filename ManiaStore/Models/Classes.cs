@@ -10,9 +10,16 @@ namespace BrandVille.Models
     {
         public Result Result { get; set; }
     }
+
     public class Result
     {
         public List<Product> Products { get; set; }
+        public Pagination Pagination { get; set; }
+    }
+
+    public class Pagination
+    {
+        public int CurrentPage { get; set; }
     }
 
     public class BasketItems

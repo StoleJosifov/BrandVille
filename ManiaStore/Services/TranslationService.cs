@@ -13,7 +13,7 @@ namespace BrandVille.Services
     {
         public static string Translate(string text)
         {
-            string url = $"http://translate.google.com/translate_a/t?client=j&text={HttpUtility.UrlEncode(text)}&hl=en&sl=bg&tl=en";
+            string url = $"http://translate.google.com/translate_a/t?client=j&text={HttpUtility.UrlEncode(text)}&hl=en&sl=bg&tl=sq";
 
             // Retrieve Translation with HTTP GET call
             string html = null;
